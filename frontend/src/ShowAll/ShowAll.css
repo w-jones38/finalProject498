@@ -1,0 +1,14 @@
+.showAll {
+    text-align: center;
+}
+
+.showAll-header {
+    background-color: #282c34;
+    margin-top: 5vmin;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    padding-top: 2vmin;
+    font-size: 5vmin;
+    color: #FFFFFF;
+}
