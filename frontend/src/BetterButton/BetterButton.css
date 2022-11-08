@@ -13,7 +13,7 @@
   transition: .3s linear, color 0s, background-color 0s;
   outline: var(--b) solid #0000;
   outline-offset: .6em;
-  font-size: 2vmin;
+  font-size: 1.5vmin;
 
   border: 0;
 
