@@ -1,7 +1,17 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import './Toolbar.css'
 
 function Toolbar(props) {
+    const navigate = useNavigate();
+
+    const navToHomepage = () => {
+        navigate('/');
+    };
+    const navToProfile = () => {
+        navigate('/profile');
+    };
     return (
         <header className='Toolbar'>
             {/*
@@ -9,8 +19,11 @@ function Toolbar(props) {
             OR we could create new components called ToolbarButtons? and add
             them in here and style them there
             */}
-            <button disabled={props.pageSelected === "Homepage"}>HOME</button>
-            <button disabled={props.pageSelected === "Profile"}>PROFILE</button> 
+
+            <button disabled={props.pageSelected === "Homepage"} 
+                onClick={navToHomepage}>HOME</button>
+            <button disabled={props.pageSelected === "Profile"}
+                onClick={navToProfile}>PROFILE</button> 
         </header>
     );
 }
