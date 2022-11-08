@@ -1,6 +1,6 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import BetterButton from '../BetterButton/BetterButton';
+import { useNavigate } from 'react-router-dom';
 import './Toolbar.css'
 
 function Toolbar(props) {
