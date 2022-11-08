@@ -9,9 +9,11 @@ function Toolbar(props) {
     const navToHomepage = () => {
         navigate('/');
     };
+
     const navToProfile = () => {
         navigate('/profile');
     };
+
     return (
         <header className='Toolbar'>
             <BetterButton disabled={props.pageSelected === "Homepage"}

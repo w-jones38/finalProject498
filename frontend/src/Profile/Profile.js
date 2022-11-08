@@ -1,5 +1,6 @@
 import React from 'react';
 import Toolbar from '../Toolbar/Toolbar';
+import PictureLink from '../PictureLink/PictureLink';
 import './Profile.css'
 
 function Profile(props) {
@@ -7,7 +8,7 @@ function Profile(props) {
         <div className='Profile'>
             <Toolbar pageSelected='Profile'/>
             <header className='Profile-header'>
-                Stinky
+                <PictureLink />
             </header>
         </div>
     );
