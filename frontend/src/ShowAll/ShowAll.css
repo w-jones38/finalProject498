@@ -2,13 +2,27 @@
     text-align: center;
 }
 
-.showAll-header {
+.showAll-content {
     background-color: #282c34;
     margin-top: 5vmin;
     min-height: 100vh;
+    width: 100%;
     display: flex;
     justify-content: center;
     padding-top: 2vmin;
     font-size: 5vmin;
     color: #FFFFFF;
+    display: inline-block;
+}
+
+.showAll-headerText {
+    justify-content: center;
+    display: inline-block;
+    flex-direction: column;
+    padding: 10vmin;
+}
+
+.showAll-pictureContainer {
+    flex-wrap: wrap;
+    flex-grow: 2;
 }

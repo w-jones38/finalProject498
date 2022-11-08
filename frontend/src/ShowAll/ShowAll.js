@@ -32,11 +32,13 @@ function ShowAll(props) {
     return (
         <div className="showAll">
             <Toolbar pageSelected="ShowAll"/>
-            <header className="showAll-header">
-                <div>
+            <header className="showAll-content">
+                
+                <div className='showAll-headerText'>
                 You are viewing {isFavorites ? "your favorites" : "all of your comics"}
                 </div>
-                <div>
+
+                <div className='showAll-pictureContainer'>
                     {data.length ?
                     data.map((url) => {
                         return(
