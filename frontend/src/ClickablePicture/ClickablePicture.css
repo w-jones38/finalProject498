@@ -1,0 +1,20 @@
+.pictureContainer {
+    margin-top: 5vmin;
+    flex: 1;
+}
+
+.picture {
+    width: 70vmin;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px;
+}
+
+.pictureCaption {
+    color: #ffffff;
+    font-size: 4.5vmin;
+}
+
+.picture:hover {
+    opacity: 70%;
+}

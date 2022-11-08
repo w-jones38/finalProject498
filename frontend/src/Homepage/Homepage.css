@@ -12,6 +12,7 @@
 
 .Homepage-header {
   background-color: #282c34;
+  margin-top: 5vmin;
   min-height: 100vh;
   display: flex;
   flex-direction: column;

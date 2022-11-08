@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './Homepage.css'
 import Toolbar from '../Toolbar/Toolbar';
+import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 
 function Homepage() {
     const [mainImage, setMainImage] = useState(null);
@@ -27,8 +28,9 @@ function Homepage() {
             <Toolbar pageSelected='Homepage'/>
             <header className='Homepage-header'>
                 {
-                // TODO: may want to change the "loading" to be a component
-                mainImage == null ? "loading" : 
+                mainImage == null ? 
+                <LoadingSpinner />
+                : 
                 <img src={mainImage} alt="logo2_512.png" className="Homepage-image"></img>
                 }
                 <a className="Homepage-link" href="https://en.wikipedia.org/wiki/Calvin_and_Hobbes"

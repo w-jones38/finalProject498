@@ -1,0 +1,10 @@
+.Profile {
+    text-align: center;
+}
+  
+.Profile-header {
+    background-color: #282c34;
+    margin-top: 5vmin;
+    min-height: 100vh;
+    display: flex;
+}
