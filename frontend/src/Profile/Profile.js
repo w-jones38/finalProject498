@@ -8,10 +8,11 @@ function Profile(props) {
     const navigate = useNavigate();
 
     const navToFavorites = () => {
-        navigate('/ShowAll?favorites=true');
+        navigate('/showAll?favorites=true');
     };
+
     const navToAll = () => {
-        navigate('/ShowAll?favorites=false');
+        navigate('/showAll?favorites=false');
     };
 
     return (

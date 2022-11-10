@@ -2,8 +2,8 @@ import './ClickablePicture.css'
 
 function ClickablePicture(props) {
     return (
-        <div onClick={props.onClick} className="pictureContainer">
-            <img src={props.src} className='picture'/>
+        <div className="pictureContainer">
+            <img onClick={props.onClick} src={props.src} className='picture'/>
             <figcaption className='pictureCaption'>{props.text}</figcaption>
         </div>
     )
