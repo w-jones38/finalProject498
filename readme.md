@@ -6,6 +6,5 @@ Once you have yarn installed, go into finalProject498/frontend and run 'yarn ins
 
 Once that has finished, run 'yarn start'
 
-
 To run the docker image:
 go to the directory with the docker file and run: 'docker-compose up' 

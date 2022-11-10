@@ -23,6 +23,6 @@
 }
 
 .showAll-pictureContainer {
+    display: flex;
     flex-wrap: wrap;
-    flex-grow: 2;
 }
