@@ -45,7 +45,7 @@ namespace CalvinBackend.Controllers
 
         // GET: api/CalvinStrip/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<CalvinStrip>> GetCalvinStrip(int id)
+        public async Task<ActionResult<CalvinStripResponse>> GetCalvinStrip(int id)
         {
             //Convert.ToBase64String(b);
           if (_context.CalvinStrips == null)
@@ -58,8 +58,19 @@ namespace CalvinBackend.Controllers
             {
                 return NotFound();
             }
+            var str = System.Text.Encoding.Default.GetString(calvinStrip.ComicStrip);
+            CalvinStripResponse ret = new CalvinStripResponse()
+            {
+                ComicStripBase64 = str,//Convert.ToBase64String(calvinStrip.ComicStrip),
+                DateOfPrint = DateTime.UtcNow,
+                DisplayedDate = DateTime.UtcNow,
+                FileName = calvinStrip.FileName,
+                Id = calvinStrip.Id,
+                SundayComic = calvinStrip.SundayComic.Value,
 
-            return calvinStrip;
+            };
+            
+            return Ok(ret);
         }
 
         // PUT: api/CalvinStrip/5
