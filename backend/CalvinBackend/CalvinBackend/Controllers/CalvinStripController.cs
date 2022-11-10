@@ -23,7 +23,7 @@ namespace CalvinBackend.Controllers
 
         // GET: api/CalvinStrip
         [HttpGet]
-        public async Task<ActionResult<CalvinStrip>> GetCalvinStrips()
+        public async Task<ActionResult<CalvinStripResponse>> GetCalvinStrips()
         {
           if (_context.CalvinStrips == null)
           {
@@ -33,14 +33,33 @@ namespace CalvinBackend.Controllers
                             System.Globalization.CultureInfo.InvariantCulture);
             DateTime today = DateTime.Today;
             var diffOfDates = today - start;
-            var createStrip = await _context.CalvinStrips.FindAsync(diffOfDates.Days+1); //will be zero for day one and indexs dont start until 1
+            var calvinStrip = await _context.CalvinStrips.FindAsync(diffOfDates.Days);
 
-            if (createStrip == null)
+            if (calvinStrip == null)
             {
                 return NotFound();
             }
+            var str = System.Text.Encoding.Default.GetString(calvinStrip.ComicStrip);
 
-            return createStrip;
+            // Converting DateOnly to DateTime by providing Time Info
+
+            DateOnly dateOfPrint = (DateOnly)calvinStrip.DateOfPrint;
+            DateTime dateOfPrintDT = dateOfPrint.ToDateTime(TimeOnly.Parse("12:00 AM"));
+            //DateTime currentDate = 
+            
+            
+            
+            CalvinStripResponse ret = new CalvinStripResponse() // contributed by Zach Jones
+            {
+                ComicStripBase64 = str,//Convert.ToBase64String(calvinStrip.ComicStrip),
+                DateOfPrint = dateOfPrintDT,
+                DisplayedDate = DateTime.Now, 
+                FileName = calvinStrip.FileName,
+                Id = calvinStrip.Id,
+                SundayComic = calvinStrip.SundayComic.Value,
+            };
+
+            return ret;
         }
 
         // GET: api/CalvinStrip/5
@@ -59,11 +78,13 @@ namespace CalvinBackend.Controllers
                 return NotFound();
             }
             var str = System.Text.Encoding.Default.GetString(calvinStrip.ComicStrip);
+            DateOnly dateOfPrint = (DateOnly)calvinStrip.DateOfPrint;
+            DateTime dateOfPrintDT = dateOfPrint.ToDateTime(TimeOnly.Parse("12:00 AM"));
             CalvinStripResponse ret = new CalvinStripResponse()
             {
                 ComicStripBase64 = str,//Convert.ToBase64String(calvinStrip.ComicStrip),
-                DateOfPrint = DateTime.UtcNow,
-                DisplayedDate = DateTime.UtcNow,
+                DateOfPrint = dateOfPrintDT,
+                DisplayedDate = DateTime.Now,
                 FileName = calvinStrip.FileName,
                 Id = calvinStrip.Id,
                 SundayComic = calvinStrip.SundayComic.Value,
