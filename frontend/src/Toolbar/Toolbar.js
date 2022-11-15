@@ -15,15 +15,13 @@ function Toolbar(props) {
     };
 
     return (
-        <div className='Toolbar-container'>
-            <header className='Toolbar'>
-                <BetterButton disabled={props.pageSelected === "Homepage"}
-                    onClick={navToHomepage} text="HOME"/>
-                <img className="Toolbar-image" src="header.png" />
-                <BetterButton disabled={props.pageSelected === "Profile"}
-                    onClick={navToProfile} text="PROFILE" />
-            </header>
-        </div>
+        <header className='Toolbar'>
+            <BetterButton disabled={props.pageSelected === "Homepage"}
+                onClick={navToHomepage} text="HOME"/>
+            <img className="Toolbar-image" src="header.png" />
+            <BetterButton disabled={props.pageSelected === "Profile"}
+                onClick={navToProfile} text="PROFILE" />
+        </header>
     );
 }
 
