@@ -21,6 +21,8 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.2" />
+    <PackageReference Include="DateOnlyTimeOnly.AspNet" Version="2.0.0" />
+    <PackageReference Include="DateOnlyTimeOnly.AspNet.Swashbuckle" Version="2.0.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -31,5 +33,7 @@
     <None Remove="Microsoft.EntityFrameworkCore.SqlServer" />
     <None Remove="Microsoft.EntityFrameworkCore.Tools" />
     <None Remove="Microsoft.EntityFrameworkCore.Sqlite" />
+    <None Remove="DateOnlyTimeOnly.AspNet" />
+    <None Remove="DateOnlyTimeOnly.AspNet.Swashbuckle" />
   </ItemGroup>
 </Project>

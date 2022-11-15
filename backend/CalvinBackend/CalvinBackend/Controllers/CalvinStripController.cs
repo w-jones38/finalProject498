@@ -25,10 +25,10 @@ namespace CalvinBackend.Controllers
         [HttpGet]
         public async Task<ActionResult<CalvinStripResponse>> GetCalvinStrips()
         {
-          if (_context.CalvinStrips == null)
-          {
-              return NotFound();
-          }
+            if (_context.CalvinStrips == null)
+            {
+                return NotFound();
+            }
             DateTime start = DateTime.Parse(Constants.startDate,
                             System.Globalization.CultureInfo.InvariantCulture);
             DateTime today = DateTime.Today;
@@ -39,21 +39,15 @@ namespace CalvinBackend.Controllers
             {
                 return NotFound();
             }
+
             var str = System.Text.Encoding.Default.GetString(calvinStrip.ComicStrip);
-
-            // Converting DateOnly to DateTime by providing Time Info
-
             DateOnly dateOfPrint = (DateOnly)calvinStrip.DateOfPrint;
-            DateTime dateOfPrintDT = dateOfPrint.ToDateTime(TimeOnly.Parse("12:00 AM"));
-            //DateTime currentDate = 
-            
-            
-            
+               
             CalvinStripResponse ret = new CalvinStripResponse() // contributed by Zach Jones
             {
-                ComicStripBase64 = str,//Convert.ToBase64String(calvinStrip.ComicStrip),
-                DateOfPrint = dateOfPrintDT,
-                DisplayedDate = DateTime.Now, 
+                ComicStripBase64 = str,
+                DateOfPrint = dateOfPrint,
+                DisplayedDate = DateOnly.FromDateTime(DateTime.Now), 
                 FileName = calvinStrip.FileName,
                 Id = calvinStrip.Id,
                 SundayComic = calvinStrip.SundayComic.Value,
@@ -67,11 +61,12 @@ namespace CalvinBackend.Controllers
         public async Task<ActionResult<CalvinStripResponse>> GetCalvinStrip(int id)
         {
             //Convert.ToBase64String(b);
-          if (_context.CalvinStrips == null)
-          {
-              return NotFound();
-          }
+            if (_context.CalvinStrips == null)
+            {
+                return NotFound();
+            }
             var calvinStrip = await _context.CalvinStrips.FindAsync(id);
+            var temp3 = await _context.CalvinStrips.FindAsync(3);
 
             if (calvinStrip == null)
             {
@@ -80,11 +75,12 @@ namespace CalvinBackend.Controllers
             var str = System.Text.Encoding.Default.GetString(calvinStrip.ComicStrip);
             DateOnly dateOfPrint = (DateOnly)calvinStrip.DateOfPrint;
             DateTime dateOfPrintDT = dateOfPrint.ToDateTime(TimeOnly.Parse("12:00 AM"));
+
             CalvinStripResponse ret = new CalvinStripResponse()
             {
-                ComicStripBase64 = str,//Convert.ToBase64String(calvinStrip.ComicStrip),
-                DateOfPrint = dateOfPrintDT,
-                DisplayedDate = DateTime.Now,
+                ComicStripBase64 = str,
+                DateOfPrint = dateOfPrint,
+                DisplayedDate = DateOnly.FromDateTime(DateTime.Now),
                 FileName = calvinStrip.FileName,
                 Id = calvinStrip.Id,
                 SundayComic = calvinStrip.SundayComic.Value,
@@ -94,72 +90,63 @@ namespace CalvinBackend.Controllers
             return Ok(ret);
         }
 
-        // PUT: api/CalvinStrip/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutCalvinStrip(int id, CalvinStrip calvinStrip)
+        // GET: api/CalvinStrip/date/1985-11-18
+        [HttpGet("date/{date}")]
+        public async Task<ActionResult<CalvinStripResponse>> GetCalvinStrip(DateOnly date)
         {
-            if (id != calvinStrip.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(calvinStrip).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CalvinStripExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
-        // POST: api/CalvinStrip
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<CalvinStrip>> PostCalvinStrip(CalvinStrip calvinStrip)
-        {
-          if (_context.CalvinStrips == null)
-          {
-              return Problem("Entity set 'CalvinContext.CalvinStrips'  is null.");
-          }
-            _context.CalvinStrips.Add(calvinStrip);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetCalvinStrip", new { id = calvinStrip.Id }, calvinStrip);
-        }
-
-        // DELETE: api/CalvinStrip/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteCalvinStrip(int id)
-        {
+            var givenDateOnly = date;
+            
             if (_context.CalvinStrips == null)
             {
                 return NotFound();
             }
-            var calvinStrip = await _context.CalvinStrips.FindAsync(id);
+            var query = from db in _context.CalvinStrips
+                        where db.DateOfPrint.Equals(givenDateOnly)
+                        select db;
+
+            var calvinStrip = await query.FirstAsync();
+
             if (calvinStrip == null)
             {
                 return NotFound();
             }
 
-            _context.CalvinStrips.Remove(calvinStrip);
-            await _context.SaveChangesAsync();
+            string str = "";
 
-            return NoContent();
+            if(calvinStrip.ComicStrip != null)
+            {
+                str = System.Text.Encoding.Default.GetString(calvinStrip.ComicStrip);
+            }
+            else
+            {
+                return NotFound();
+            }
+
+            DateOnly? dateOfPrint = null;
+
+            if (calvinStrip.DateOfPrint != null)
+            {
+                dateOfPrint = (DateOnly)calvinStrip.DateOfPrint;
+            }
+            else
+            {
+                return NotFound();
+            }
+
+            
+            CalvinStripResponse ret = new CalvinStripResponse()
+            {
+                ComicStripBase64 = str,
+                DateOfPrint = dateOfPrint,
+                DisplayedDate = DateOnly.FromDateTime(DateTime.Now),
+                FileName = calvinStrip.FileName,
+                Id = calvinStrip.Id,
+                SundayComic = calvinStrip.SundayComic.Value,
+
+            };
+
+            return Ok(ret);
         }
-
         private bool CalvinStripExists(int id)
         {
             return (_context.CalvinStrips?.Any(e => e.Id == id)).GetValueOrDefault();
