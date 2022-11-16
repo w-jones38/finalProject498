@@ -12,6 +12,7 @@ function Homepage() {
     */
     const fetchImage = async (imageUrl) => {
         const res = await fetch(imageUrl);
+        console.log(res)
         const imageBlob = await res.blob();
         const imageObjectURL = URL.createObjectURL(imageBlob);
         setMainImage(imageObjectURL);
@@ -19,8 +20,8 @@ function Homepage() {
 
     useEffect(() => {
         // TOOD: create an endpoint to request an image
-        //fetchImage("insertURLhere.com")
-        setMainImage('logo2_512.png');
+        fetchImage("https://localhost:7144/api/CalvinStrip")
+        //setMainImage('logo2_512.png');
     }, [mainImage])
 
     return (
@@ -28,10 +29,10 @@ function Homepage() {
             <Toolbar pageSelected='Homepage'/>
             <header className='Homepage-header'>
                 {
-                mainImage == null ? 
+                mainImage ? 
                 <LoadingSpinner />
                 : 
-                <img src={mainImage} alt="logo2_512.png" className="Homepage-image"></img>
+                <img src={mainImage} alt="whoops, this isn't right" className="Homepage-image"></img>
                 }
                 <a className="Homepage-link" href="https://en.wikipedia.org/wiki/Calvin_and_Hobbes"
                     target="_blank" rel="noopener noreferrer" >
