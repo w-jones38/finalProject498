@@ -11,9 +11,16 @@ function Homepage() {
     an imageObjectURL that we can hand to our <img> tag below.
     */
     const fetchImage = async (imageUrl) => {
-        const res = await fetch(imageUrl);
-        console.log(res)
-        const imageBlob = await res.blob();
+        let res;
+        let imageBlob
+        try {
+            res = await fetch(imageUrl);
+            imageBlob = await res.blob();
+        } catch (error) {
+            console.log(error)
+            setMainImage(null)
+            return
+        }
         const imageObjectURL = URL.createObjectURL(imageBlob);
         setMainImage(imageObjectURL);
       };
@@ -29,7 +36,7 @@ function Homepage() {
             <Toolbar pageSelected='Homepage'/>
             <header className='Homepage-header'>
                 {
-                mainImage ? 
+                !mainImage ? 
                 <LoadingSpinner />
                 : 
                 <img src={mainImage} alt="whoops, this isn't right" className="Homepage-image"></img>
