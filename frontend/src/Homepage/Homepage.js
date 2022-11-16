@@ -3,6 +3,27 @@ import './Homepage.css'
 import Toolbar from '../Toolbar/Toolbar';
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 
+// https://stackoverflow.com/questions/16245767/creating-a-blob-from-a-base64-string-in-javascript
+const b64toBlob = (b64Data, contentType='', sliceSize=512) => {
+    const byteCharacters = atob(b64Data);
+    const byteArrays = [];
+  
+    for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+      const slice = byteCharacters.slice(offset, offset + sliceSize);
+  
+      const byteNumbers = new Array(slice.length);
+      for (let i = 0; i < slice.length; i++) {
+        byteNumbers[i] = slice.charCodeAt(i);
+      }
+  
+      const byteArray = new Uint8Array(byteNumbers);
+      byteArrays.push(byteArray);
+    }
+  
+    const blob = new Blob(byteArrays, {type: contentType});
+    return blob;
+}
+
 function Homepage() {
     const [mainImage, setMainImage] = useState(null);
 
@@ -14,21 +35,27 @@ function Homepage() {
         let res;
         let imageBlob
         try {
-            res = await fetch(imageUrl);
-            imageBlob = await res.blob();
+            res = (await fetch(imageUrl)).json();
+
         } catch (error) {
             console.log(error)
             setMainImage(null)
             return
         }
-        const imageObjectURL = URL.createObjectURL(imageBlob);
-        setMainImage(imageObjectURL);
+        
+        res.then((result) => {
+            console.log(result)
+            const imageBlob = b64toBlob(result.comicStripBase64);
+            const imageObjectURL = URL.createObjectURL(imageBlob);
+            console.log(`setting main image to URL ${imageObjectURL}`)
+            setMainImage(imageObjectURL);
+        })
       };
 
     useEffect(() => {
         // TOOD: FIX THIS LINK
         fetchImage("https://localhost:7144/api/CalvinStrip")
-    }, [mainImage])
+    }, [])
 
     return (
         <div className='Homepage'>
