@@ -7,13 +7,8 @@ import b64toBlob from '../helper';
 function Homepage() {
     const [mainImage, setMainImage] = useState(null);
 
-    /*
-    this will take the imageUrl, fetch the image and then create
-    an imageObjectURL that we can hand to our <img> tag below.
-    */
     const fetchImage = async (imageUrl) => {
         let res;
-        let imageBlob
         try {
             res = (await fetch(imageUrl)).json();
 
@@ -22,18 +17,14 @@ function Homepage() {
             setMainImage(null)
             return
         }
-        
         res.then((result) => {
-            console.log(result)
             const imageBlob = b64toBlob(result.comicStripBase64);
             const imageObjectURL = URL.createObjectURL(imageBlob);
-            console.log(`setting main image to URL ${imageObjectURL}`)
             setMainImage(imageObjectURL);
         })
-      };
+    };
 
     useEffect(() => {
-        // TOOD: FIX THIS LINK
         fetchImage("https://localhost:7144/api/CalvinStrip")
     }, [])
 
