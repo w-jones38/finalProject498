@@ -3,7 +3,7 @@
 }
 
 .Homepage-image {
-  width: 80vmin;
+  height: min(25vmax, 120vmin);
   pointer-events: none;
   border: 1px solid #ddd;
   border-radius: 4px;
