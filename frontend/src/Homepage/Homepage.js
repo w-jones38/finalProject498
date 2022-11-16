@@ -26,9 +26,8 @@ function Homepage() {
       };
 
     useEffect(() => {
-        // TOOD: create an endpoint to request an image
+        // TOOD: FIX THIS LINK
         fetchImage("https://localhost:7144/api/CalvinStrip")
-        //setMainImage('logo2_512.png');
     }, [mainImage])
 
     return (
