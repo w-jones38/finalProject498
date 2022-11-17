@@ -19,6 +19,17 @@ function Toolbar(props) {
             <BetterButton disabled={props.pageSelected === "Homepage"}
                 onClick={navToHomepage} text="HOME"/>
             <img className="Toolbar-image" src="header.png" />
+            {/*START TESTING STUFF*/}
+            <button onClick={() => {
+                localStorage.clear();
+            }}>CLEAR LOCAL STORAGE</button>
+            <button onClick={() => {
+                localStorage.setItem(
+                    (Math.floor(Math.random() * 400) + 1).toString(),
+                    true
+                );
+            }}>ADD TO RANDOM TO LOCAL STORAGE</button>
+            {/*END TESTING STUFF*/}
             <BetterButton disabled={props.pageSelected === "Profile"}
                 onClick={navToProfile} text="PROFILE" />
         </header>

@@ -1,5 +1,5 @@
 // https://stackoverflow.com/questions/16245767/creating-a-blob-from-a-base64-string-in-javascript
-const b64toBlob = (b64Data, contentType='', sliceSize=512) => {
+export const b64toBlob = (b64Data, contentType='', sliceSize=512) => {
     const byteCharacters = atob(b64Data);
     const byteArrays = [];
   
@@ -18,4 +18,17 @@ const b64toBlob = (b64Data, contentType='', sliceSize=512) => {
     const blob = new Blob(byteArrays, {type: contentType});
     return blob;
 }
-export default b64toBlob
+
+// https://stackoverflow.com/questions/17745292/how-to-retrieve-all-localstorage-items-without-knowing-the-keys-in-advance
+export function allStorage() {
+
+  var archive = {}, // Notice change here
+      keys = Object.keys(localStorage),
+      i = keys.length;
+
+  while ( i-- ) {
+      archive[ keys[i] ] = localStorage.getItem( keys[i] );
+  }
+
+  return archive;
+}
