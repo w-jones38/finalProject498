@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { renderMatches } from 'react-router-dom';
 import ClickablePicture from '../ClickablePicture/ClickablePicture';
 import { allStorage, b64toBlob } from '../helper';
+import ImageViewer from '../ImageViewer/ImageViewer';
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 import Toolbar from "../Toolbar/Toolbar";
 import "./ShowAll.css"
@@ -12,11 +13,14 @@ function ShowAll() {
 
     const [data, setData] = useState([])
     const [isStillDownloading, setIsStillDownloading] = useState(true)
+    const [currentImageViewURL, setCurrentImageViewURL] = useState(null)
 
     // TODO: we should have a pop up render and show the user
     // a close up of the comic they selected
-    const openPicturePreview = () => {
-        console.log("AHHHH")
+    const openPicturePreview = (url) => {
+        if(!currentImageViewURL){
+            setCurrentImageViewURL(url)
+        }
     };
 
     const fetchImages = async (imagesUrl) => {
@@ -49,7 +53,6 @@ function ShowAll() {
                 url += `&`
             }
         }
-        console.log(url)
         fetchImages(url);
     }, [])
 
@@ -61,13 +64,18 @@ function ShowAll() {
         <div className="showAll">
             <Toolbar pageSelected="ShowAll"/>
             <header className="showAll-content">
+
+                {currentImageViewURL && 
+                <ImageViewer 
+                    src={currentImageViewURL}
+                    close={() => {setCurrentImageViewURL(null)}} />
+                }
                 
                 <div className='showAll-headerText'>
                 You are viewing {isFavorites ? "your favorites" : "all of your comics"}
                 </div>
 
                 <div className='showAll-pictureContainer'>
-                    {console.log(`data: ${data}`)}
                     {data.length ?
                     data.map((url) => {
                         return(
@@ -75,7 +83,10 @@ function ShowAll() {
                             // this image that will go in the caption
                             // a date maybe?
                             <ClickablePicture key={`${url}${Math.random()}`} 
-                                src={url} onClick={openPicturePreview}
+                                src={url}
+                                onClick={() => {
+                                    openPicturePreview(url);
+                                }}
                                 text=""
                             />
                         )
