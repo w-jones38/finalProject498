@@ -101,9 +101,10 @@ namespace CalvinBackend.Controllers
 
             var ret = new List<CalvinStripResponse>();
 
-            foreach (int id in ids)
+            var strips = await _context.CalvinStrips.Where(e => ids.Contains(e.Id)).ToListAsync();
+
+            foreach (var calvinStrip in strips)
             {
-                var calvinStrip = await _context.CalvinStrips.FindAsync(id);
                 if (calvinStrip != null)
                 {
                     string str = System.Text.Encoding.Default.GetString(calvinStrip.ComicStrip);
