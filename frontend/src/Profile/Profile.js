@@ -3,7 +3,6 @@ import Toolbar from '../Toolbar/Toolbar';
 import ClickablePicture from '../ClickablePicture/ClickablePicture';
 import './Profile.css'
 import { useNavigate } from 'react-router-dom';
-import { allStorage } from '../helper.js'
 
 function Profile(props) {
     const navigate = useNavigate();
@@ -15,10 +14,6 @@ function Profile(props) {
     const navToAll = () => {
         navigate('/showAll?favorites=false');
     };
-
-    useEffect(() => {
-        console.log(allStorage());
-    })
 
     return (
         <div className='Profile'>

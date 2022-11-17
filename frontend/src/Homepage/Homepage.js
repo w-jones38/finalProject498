@@ -20,7 +20,8 @@ function Homepage() {
         res.then((result) => {
             const imageBlob = b64toBlob(result.comicStripBase64);
             const imageObjectURL = URL.createObjectURL(imageBlob);
-            localStorage.setItem(result.id, true)
+            // set the result ID in local storage to be true
+            localStorage.setItem(result.id, result.id)
             setMainImage(imageObjectURL);
         })
     };
