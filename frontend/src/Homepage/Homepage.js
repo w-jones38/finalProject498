@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './Homepage.css'
 import Toolbar from '../Toolbar/Toolbar';
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
-import b64toBlob from '../helper';
+import { b64toBlob } from '../helper';
 
 function Homepage() {
     const [mainImage, setMainImage] = useState(null);
@@ -13,19 +13,20 @@ function Homepage() {
             res = (await fetch(imageUrl)).json();
 
         } catch (error) {
-            console.log(error)
-            setMainImage(null)
-            return
+            console.log(error);
+            setMainImage(null);
+            return;
         }
         res.then((result) => {
             const imageBlob = b64toBlob(result.comicStripBase64);
             const imageObjectURL = URL.createObjectURL(imageBlob);
+            localStorage.setItem(result.id, true)
             setMainImage(imageObjectURL);
         })
     };
 
     useEffect(() => {
-        fetchImage("https://localhost:7144/api/CalvinStrip")
+        fetchImage("https://localhost:7144/api/CalvinStrip");
     }, [])
 
     return (
