@@ -19,26 +19,35 @@ function ShowAll(props) {
         console.log("AHHHH")
     };
 
-    const fetchImages = async (imageUrl) => {
+    const fetchImages = async (imagesUrl) => {
         let res;
         try {
-            res = (await fetch(imageUrl)).json();
-
+            res = (await fetch(imagesUrl)).json();
         } catch (error) {
             console.log(error);
             setData([]);
             return;
         }
         res.then((result) => {
-            const imageBlob = b64toBlob(result.comicStripBase64);
-            const imageObjectURL = URL.createObjectURL(imageBlob);
-            setData([imageObjectURL]);
+            for (let i = 0; i < result.length(); ++i){
+                const imageBlob = b64toBlob(result.comicStripBase64);
+                const imageObjectURL = URL.createObjectURL(imageBlob);
+                setData(data.push(imageObjectURL));
+            }
         })
     };
 
     useState(() => {
         let all = Object.keys(allStorage());
-        fetchImages("https://localhost:7144/api/CalvinStrip");
+        let url = "https://localhost:7144/api/CalvinStrips/ids/ids?"
+        for(let i = 0; i < all.length; ++i){
+            url += `ids=${all[i]}`;
+            if(i != all.length-1){
+                url += `&`
+            }
+        }
+        console.log(url)
+        fetchImages(url);
     }, [])
 
     return (
