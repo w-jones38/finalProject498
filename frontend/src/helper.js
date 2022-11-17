@@ -32,3 +32,15 @@ export function allStorage() {
 
   return archive;
 }
+
+export function favorite(id) {
+  if(localStorage.getItem(id)){
+    localStorage.setItem(id, `f${id}`)
+  }
+}
+
+export function unfavorite(id){
+  if(localStorage.getItem(id)){
+    localStorage.setItem(id, id)
+  }
+}
