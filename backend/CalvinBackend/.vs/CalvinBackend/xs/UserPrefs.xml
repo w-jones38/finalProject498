@@ -1,15 +1,21 @@
 ﻿<Properties StartupConfiguration="{A34E8AC1-322E-41EA-939B-0D2D216F8805}|Default">
   <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.ItemProperties.CalvinBackend PreferredExecutionTarget="/Applications/Vivaldi.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="CalvinBackend/appsettings.json">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="CalvinBackend/Controllers/CalvinStripController.cs">
     <Files>
       <File FileName="CalvinBackend/Program.cs" Line="15" Column="2" />
-      <File FileName="CalvinBackend/appsettings.json" Line="1" Column="1" />
+      <File FileName="CalvinBackend/Controllers/CalvinStripController.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="CalvinBackend" expanded="True" />
+          <Node name="CalvinBackend" expanded="True">
+            <Node name="CalvinBackend" expanded="True">
+              <Node name="Controllers" expanded="True">
+                <Node name="CalvinStripController.cs" selected="True" />
+              </Node>
+            </Node>
+          </Node>
         </State>
       </Pad>
       <Pad Id="MonoDevelop.Debugger.WatchPad">
@@ -17,9 +23,9 @@
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.CalvinBackend PreferredExecutionTarget="/Applications/Vivaldi.app" />
 </Properties>

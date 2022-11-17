@@ -19,12 +19,13 @@ builder.Services.AddDbContext<CalvinContext>(options =>
 {
     options.UseMySql(builder.Configuration.GetConnectionString("CalvinDb"),
     Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.31-mysql"));
-});
+},ServiceLifetime.Transient);
 
 var app = builder.Build();
 
 app.UseCors(options =>
     options
+    .WithOrigins("http://localhost:3000")
     .AllowAnyMethod()
     .AllowAnyHeader());
 
