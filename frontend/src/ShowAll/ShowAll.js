@@ -93,6 +93,7 @@ function ShowAll() {
                 </div>
 
                 <div className='showAll-pictureContainer'>
+                    {!data.length && !isStillDownloading && "sorry... nothing found"}
                     {data.length ?
                     data.map((url) => {
                         return(
