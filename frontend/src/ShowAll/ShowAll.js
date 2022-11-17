@@ -6,7 +6,7 @@ import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 import Toolbar from "../Toolbar/Toolbar";
 import "./ShowAll.css"
 
-function ShowAll(props) {
+function ShowAll() {
     const isFavorites = (new URLSearchParams(window.location.search)
         .get("favorites") === "true") ? true : false;
 
@@ -30,14 +30,12 @@ function ShowAll(props) {
         }
         res.then((result) => {
             const newData = data;
-            console.log(result)
             for (let i = 0; i < result.length; ++i){
                 const imageBlob = b64toBlob(result[i].comicStripBase64);
                 const imageObjectURL = URL.createObjectURL(imageBlob);
                 newData.push(imageObjectURL);
             }
             setData(newData)
-            console.log(data)
             setIsStillDownloading(false)
         })
     };
