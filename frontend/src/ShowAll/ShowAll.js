@@ -46,6 +46,23 @@ function ShowAll() {
 
     useState(() => {
         let all = Object.keys(allStorage());
+
+        // if we are only looking at favorites, we need to check local storage
+        // again to see the values. If they have an f as the fist character,
+        // it is a favorite
+        if(isFavorites){
+            let temp = [];
+            for(let i = 0; i < all.length; ++i){
+                console.log("looking");
+                if(localStorage.getItem(all[i]).charAt(0) === 'f'){
+                    temp.push(all[i]);
+                    console.log("found");
+                }
+            }
+            console.log("finished");
+            all = temp;
+        }
+
         let url = "https://localhost:7144/api/CalvinStrip/ids?"
         for(let i = 0; i < all.length; ++i){
             url += `ids=${all[i]}`;

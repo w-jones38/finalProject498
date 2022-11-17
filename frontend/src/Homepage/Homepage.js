@@ -23,8 +23,18 @@ function Homepage() {
         res.then((result) => {
             const imageBlob = b64toBlob(result.comicStripBase64);
             const imageObjectURL = URL.createObjectURL(imageBlob);
-            // set the result ID in local storage to be true
-            localStorage.setItem(result.id, result.id)
+
+            // if the item already exists, no need to set it again, just check
+            // to see if it is favorited or not
+            if(localStorage.getItem(result.id)){
+                if(localStorage.getItem(result.id).charAt(0) === 'f'){
+                    setIsFavorite(true);
+                }
+            }
+            else { // the item doesnt exist yet, so lets add it
+                localStorage.setItem(result.id, result.id)
+            }
+            
             setMainImage(imageObjectURL);
             setMainImageID(result.id);
         })
