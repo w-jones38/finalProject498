@@ -14,12 +14,13 @@ function ShowAll() {
     const [data, setData] = useState([])
     const [isStillDownloading, setIsStillDownloading] = useState(true)
     const [currentImageViewURL, setCurrentImageViewURL] = useState(null)
+    const [currentImageViewID, setCurrentImageViewID] = useState(null)
+    const [allIDs, setAllIDs] = useState([])
 
-    // TODO: we should have a pop up render and show the user
-    // a close up of the comic they selected
-    const openPicturePreview = (url) => {
+    const openPicturePreview = (url, id) => {
         if(!currentImageViewURL){
             setCurrentImageViewURL(url)
+            setCurrentImageViewID(id)
         }
     };
 
@@ -34,12 +35,15 @@ function ShowAll() {
         }
         res.then((result) => {
             const newData = data;
+            const tempAllIDs = allIDs
             for (let i = 0; i < result.length; ++i){
                 const imageBlob = b64toBlob(result[i].comicStripBase64);
                 const imageObjectURL = URL.createObjectURL(imageBlob);
                 newData.push(imageObjectURL);
+                tempAllIDs.push(result[i].id);
             }
             setData(newData)
+            setAllIDs(tempAllIDs)
             setIsStillDownloading(false)
         })
     };
@@ -53,13 +57,10 @@ function ShowAll() {
         if(isFavorites){
             let temp = [];
             for(let i = 0; i < all.length; ++i){
-                console.log("looking");
                 if(localStorage.getItem(all[i]).charAt(0) === 'f'){
                     temp.push(all[i]);
-                    console.log("found");
                 }
             }
-            console.log("finished");
             all = temp;
         }
 
@@ -85,6 +86,7 @@ function ShowAll() {
                 {currentImageViewURL && 
                 <ImageViewer 
                     src={currentImageViewURL}
+                    id={currentImageViewID}
                     close={() => {setCurrentImageViewURL(null)}} />
                 }
                 
@@ -92,18 +94,20 @@ function ShowAll() {
                 You are viewing {isFavorites ? "your favorites" : "all of your comics"}
                 </div>
 
+                {console.log(allIDs)}
+
                 <div className='showAll-pictureContainer'>
                     {!data.length && !isStillDownloading && "sorry... nothing found"}
                     {data.length ?
-                    data.map((url) => {
+                    data.map((url, index) => {
                         return(
                             // TODO: add some text, likely from the url, about
                             // this image that will go in the caption
                             // a date maybe?
-                            <ClickablePicture key={`${url}${Math.random()}`} 
+                            <ClickablePicture key={`${url}${Math.random()}`}
                                 src={url}
                                 onClick={() => {
-                                    openPicturePreview(url);
+                                    openPicturePreview(url, allIDs[index]);
                                 }}
                                 text=""
                             />

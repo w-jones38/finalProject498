@@ -1,8 +1,17 @@
 import "./ImageViewer.css"
-import React from "react"
+import React, { useState } from "react"
 import BetterButton from "../BetterButton/BetterButton";
+import { favorite, unfavorite } from "../helper";
 
 function ImageViewer(props) {
+
+    const [isFavorite, setIsFavorite] = useState(false);
+
+    useState(() => {
+        if(localStorage.getItem(props.id).charAt(0) === 'f'){
+            setIsFavorite(true);
+        }
+    }, [])
 
     // Reads out the scroll position and stores it in the data attribute
     // so we can use it in our stylesheets
@@ -18,8 +27,20 @@ function ImageViewer(props) {
         <div className="ImageViewer">
             <img src={props.src} className="Image"/>
             <div>
+                {console.log(props.id)}
                 <BetterButton text={"Close"} onClick={props.close}/>
-                <BetterButton text={"Favorite"} disabled={true}/>
+                <BetterButton text={isFavorite ? "Unfavorite" : "Favorite"}
+                    onClick={() => {
+                        if(!isFavorite){
+                            setIsFavorite(true);
+                            favorite(props.id)
+                        }
+                        else {
+                            setIsFavorite(false);
+                            unfavorite(props.id);
+                        }
+                    }}
+                />
             </div>
         </div>
     )
