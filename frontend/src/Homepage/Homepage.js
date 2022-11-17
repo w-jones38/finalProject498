@@ -3,6 +3,7 @@ import './Homepage.css'
 import Toolbar from '../Toolbar/Toolbar';
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 import { b64toBlob } from '../helper';
+import BetterButton from '../BetterButton/BetterButton';
 
 function Homepage() {
     const [mainImage, setMainImage] = useState(null);
@@ -37,8 +38,13 @@ function Homepage() {
                 {
                 !mainImage ? 
                 <LoadingSpinner />
-                : 
-                <img src={mainImage} alt="whoops, this isn't right" className="Homepage-image"></img>
+                :
+                <div>
+                    <img src={mainImage} alt="whoops, this isn't right" className="Homepage-image"></img>
+                    <div>
+                        <BetterButton disabled={true} text={"Favorite"} />
+                    </div>
+                </div> 
                 }
                 <a className="Homepage-link" href="https://en.wikipedia.org/wiki/Calvin_and_Hobbes"
                     target="_blank" rel="noopener noreferrer" >
