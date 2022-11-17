@@ -57,7 +57,7 @@ namespace CalvinBackend.Controllers
         }
 
         // GET: api/CalvinStrip/5
-        [HttpGet("{id}")]
+        [HttpGet("ids/{id?}")]
         public async Task<ActionResult<CalvinStripResponse>> GetCalvinStrip(int id)
         {
             //Convert.ToBase64String(b);
@@ -90,8 +90,47 @@ namespace CalvinBackend.Controllers
             return Ok(ret);
         }
 
+        [HttpGet("ids/")]
+        public async Task<ActionResult<IEnumerable<CalvinStripResponse>>> GetCalvinStrips([FromQuery] IList<int> ids)
+        {
+            //Convert.ToBase64String(b);
+            if (_context.CalvinStrips == null)
+            {
+                return NotFound();
+            }
+
+            var ret = new List<CalvinStripResponse>();
+
+            foreach (int id in ids)
+            {
+                var calvinStrip = await _context.CalvinStrips.FindAsync(id);
+                if (calvinStrip != null)
+                {
+                    string str = System.Text.Encoding.Default.GetString(calvinStrip.ComicStrip);
+                    DateOnly? dateOfPrint = null;
+
+                    if (calvinStrip.DateOfPrint != null)
+                    {
+                        dateOfPrint = (DateOnly)calvinStrip.DateOfPrint;
+                    }
+                    var temp = new CalvinStripResponse()
+                    {
+                        ComicStripBase64 = str,
+                        DateOfPrint = dateOfPrint,
+                        DisplayedDate = DateOnly.FromDateTime(DateTime.Now),
+                        FileName = calvinStrip.FileName,
+                        Id = calvinStrip.Id,
+                        SundayComic = calvinStrip.SundayComic.Value,
+
+                    };
+                    ret.Add(temp);
+                }
+            }
+            return Ok(ret);
+        }
+
         // GET: api/CalvinStrip/date/1985-11-18
-        [HttpGet("date/{date}")]
+        [HttpGet("dates/{date}")]
         public async Task<ActionResult<CalvinStripResponse>> GetCalvinStrip(DateOnly date)
         {
             var givenDateOnly = date;
