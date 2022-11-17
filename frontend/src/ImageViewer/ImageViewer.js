@@ -27,7 +27,6 @@ function ImageViewer(props) {
         <div className="ImageViewer">
             <img src={props.src} className="Image"/>
             <div>
-                {console.log(props.id)}
                 <BetterButton text={"Close"} onClick={props.close}/>
                 <BetterButton text={isFavorite ? "Unfavorite" : "Favorite"}
                     onClick={() => {

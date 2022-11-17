@@ -94,8 +94,6 @@ function ShowAll() {
                 You are viewing {isFavorites ? "your favorites" : "all of your comics"}
                 </div>
 
-                {console.log(allIDs)}
-
                 <div className='showAll-pictureContainer'>
                     {!data.length && !isStillDownloading && "sorry... nothing found"}
                     {data.length ?
