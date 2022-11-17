@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react';
 import './Homepage.css'
 import Toolbar from '../Toolbar/Toolbar';
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
-import { b64toBlob } from '../helper';
+import { b64toBlob, favorite, unfavorite } from '../helper';
 import BetterButton from '../BetterButton/BetterButton';
 
 function Homepage() {
     const [mainImage, setMainImage] = useState(null);
+    const [mainImageID, setMainImageID] = useState(-1);
+    const [isFavorite, setIsFavorite] = useState(false);
 
     const fetchImage = async (imageUrl) => {
         let res;
@@ -21,9 +23,20 @@ function Homepage() {
         res.then((result) => {
             const imageBlob = b64toBlob(result.comicStripBase64);
             const imageObjectURL = URL.createObjectURL(imageBlob);
-            // set the result ID in local storage to be true
-            localStorage.setItem(result.id, result.id)
+
+            // if the item already exists, no need to set it again, just check
+            // to see if it is favorited or not
+            if(localStorage.getItem(result.id)){
+                if(localStorage.getItem(result.id).charAt(0) === 'f'){
+                    setIsFavorite(true);
+                }
+            }
+            else { // the item doesnt exist yet, so lets add it
+                localStorage.setItem(result.id, result.id)
+            }
+            
             setMainImage(imageObjectURL);
+            setMainImageID(result.id);
         })
     };
 
@@ -42,7 +55,18 @@ function Homepage() {
                 <div>
                     <img src={mainImage} alt="whoops, this isn't right" className="Homepage-image"></img>
                     <div>
-                        <BetterButton disabled={true} text={"Favorite"} />
+                        <BetterButton text={isFavorite ? "Unfavorite" : "Favorite"}
+                            onClick={() => {
+                                if(!isFavorite){
+                                    setIsFavorite(true);
+                                    favorite(mainImageID)
+                                }
+                                else {
+                                    setIsFavorite(false);
+                                    unfavorite(mainImageID);
+                                }
+                            }}
+                        />
                     </div>
                 </div> 
                 }
