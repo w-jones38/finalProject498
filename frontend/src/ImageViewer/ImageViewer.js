@@ -1,17 +1,48 @@
 import "./ImageViewer.css"
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import BetterButton from "../BetterButton/BetterButton";
-import { favorite, unfavorite } from "../helper";
+import { favorite, unfavorite, b64toBlob } from "../helper";
+
 
 function ImageViewer(props) {
+    console.log(props.date)
 
     const [isFavorite, setIsFavorite] = useState(false);
+    const [mainImage, setMainImage] = useState(null);
 
     useState(() => {
+        if(!props.id) return
         if(localStorage.getItem(props.id).charAt(0) === 'f'){
             setIsFavorite(true);
         }
     }, [])
+
+    const dateFetchImage = async (imageUrl) => {
+        let res;
+        console.log(imageUrl)
+        try {
+            res = (await fetch(imageUrl)).json();
+
+        } catch (error) {
+            console.log(error);
+            setMainImage(null);
+            return;
+        }
+        res.then((result) => {
+            const imageBlob = b64toBlob(result.comicStripBase64);
+            const imageObjectURL = URL.createObjectURL(imageBlob);
+            setMainImage(imageObjectURL);
+        })
+    };
+
+    useEffect(() => {
+        if(props.id){
+            return
+        }
+        dateFetchImage(`https://localhost:7144/api/CalvinStrip/dates/${props.date}`);
+    }, [])
+
+
 
     // Reads out the scroll position and stores it in the data attribute
     // so we can use it in our stylesheets
@@ -25,10 +56,11 @@ function ImageViewer(props) {
 
     return (
         <div className="ImageViewer">
-            <img src={props.src} className="Image"/>
+            <img src={props.id?props.src:mainImage} className="Image"/>
             <div>
                 <BetterButton text={"Close"} onClick={props.close}/>
-                <BetterButton text={isFavorite ? "Unfavorite" : "Favorite"}
+                {   props.id?
+                    <BetterButton text={isFavorite ? "Unfavorite" : "Favorite"}
                     onClick={() => {
                         if(!isFavorite){
                             setIsFavorite(true);
@@ -39,7 +71,7 @@ function ImageViewer(props) {
                             unfavorite(props.id);
                         }
                     }}
-                />
+                />:""}
             </div>
         </div>
     )
