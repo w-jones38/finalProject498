@@ -1,6 +1,6 @@
 .ImageViewer {
     width: 80vw;
-    height: 80vh;
+    height: 50vh;
     right: 10vw;
     bottom: data-scroll;
     background: rgb(0, 0 , 0); /* Fallback for older browsers without RGBA-support */
@@ -9,12 +9,29 @@
     box-shadow: -2rem 2rem 2rem rgba(black, 0.2);
     visibility: visible;
     position: absolute;
+    text-align: center;
+}
+.ImageViewer-Sunday {
+  width: 80vw;
+  height: 90vh;
+  right: 10vw;
+  bottom: data-scroll;
+  background: rgb(0, 0 , 0); /* Fallback for older browsers without RGBA-support */
+  background: rgba(0, 0, 0, 0.9);
+  border: 1px solid #ccc;
+  box-shadow: -2rem 2rem 2rem rgba(black, 0.2);
+  visibility: visible;
+  position: absolute;
+  text-align: center;
 }
 html:not([data-scroll='0']) .ImageViewer {
+  position: fixed;
+}
+html:not([data-scroll='0']) .ImageViewer-Sunday {
   position: fixed;
 }
 .Image {
   padding-top: 10vh;
   opacity: 1;
-  width: min(80vw, 80vmin);
+  width: 55vmax;
 }

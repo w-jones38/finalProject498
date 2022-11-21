@@ -6,23 +6,16 @@ import ImageViewer from '../ImageViewer/ImageViewer';
 import { useEffect } from 'react';
 import './Calendar.css'
 
-//mindate={new Date(1985,11,18)} maxdate={new Date(1995,12,31)}
-//this.props.history.push('/path')
-//e => console.log(e.date.toLocaleDateString())
-
-// const ProtectedComponent = () => {
-//       return <Navigate to="/" />
-//     }
-
 function CH_Calendar(props){
     const navigate = useNavigate();
     const [isViewImage, setIsViewingImage] = useState(false);
     const [dateSelected, setDateSelected] = useState(null)
 
-    const navToHomepage = (e) => {
-        //navigate('/');
-        setIsViewingImage(true)
-        setDateSelected(e.date.toLocaleDateString().replace('/','-').replace('/','-'))
+    const showImage = (e) => {
+        if(!isViewImage){
+            setIsViewingImage(true)
+            setDateSelected(e.date.toLocaleDateString().replace('/','-').replace('/','-'))
+        }
     };
 
     return (
@@ -37,13 +30,12 @@ function CH_Calendar(props){
                     close={() => {setIsViewingImage(false)}}
 
                 />}
-                {console.log(isViewImage)}
                 <Calendar 
                     year={1985} 
                     enableRangeSelection={true}
                     minDate={new Date(1985,10,18)} 
                     maxDate={new Date(1995,11,31)}
-                    onDayClick={navToHomepage}
+                    onDayClick={showImage}
                 />
             </div>
 
