@@ -15,6 +15,10 @@ function Toolbar(props) {
         navigate('/profile');
     };
 
+    const navToCalendar = () => {
+        navigate('/calendar');
+    };
+
     // TODO REMOVE TESTING
     const addToStore = () => {
         let rand = (Math.floor(Math.random() * 400)+1).toString();
@@ -40,6 +44,8 @@ function Toolbar(props) {
             {/*END TESTING*/}
             <BetterButton disabled={props.pageSelected === "Profile"}
                 onClick={navToProfile} text="PROFILE" />
+            <BetterButton disabled={props.pageSelected === "Calendar"}
+                onClick={navToCalendar} text="CALENDAR" />
         </header>
     );
 }
