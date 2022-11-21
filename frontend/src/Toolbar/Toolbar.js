@@ -44,7 +44,8 @@ function Toolbar(props) {
             {/*END TESTING*/}
             <BetterButton disabled={props.pageSelected === "Profile"}
                 onClick={navToProfile} text="PROFILE" />
-            <BetterButton onClick={navToCalendar} text="Calendar" />
+            <BetterButton disabled={props.pageSelected === "Calendar"}
+                onClick={navToCalendar} text="CALENDAR" />
         </header>
     );
 }
