@@ -7,7 +7,7 @@ import { favorite, unfavorite, b64toBlob } from "../helper";
 function ImageViewer(props) {
     const [isFavorite, setIsFavorite] = useState(false);
     const [mainImage, setMainImage] = useState(null);
-    const [isSunday, setIsSunday] = useState(false)
+    const [isSunday, setIsSunday] = useState(props.isSunday)
 
     useState(() => {
         // IF props.id is NOT defined, then we are viewing from calendar

@@ -15,12 +15,15 @@ function ShowAll() {
     const [isStillDownloading, setIsStillDownloading] = useState(true)
     const [currentImageViewURL, setCurrentImageViewURL] = useState(null)
     const [currentImageViewID, setCurrentImageViewID] = useState(null)
+    const [isSunday, setIsSunday] = useState(null)
+    const [isSundayArray, setIsSundayArray] = useState([])
     const [allIDs, setAllIDs] = useState([])
 
-    const openPicturePreview = (url, id) => {
+    const openPicturePreview = (url, id, isSunday) => {
         if(!currentImageViewURL){
             setCurrentImageViewURL(url)
             setCurrentImageViewID(id)
+            setIsSunday(isSunday)
         }
     };
 
@@ -36,14 +39,17 @@ function ShowAll() {
         res.then((result) => {
             const newData = data;
             const tempAllIDs = allIDs
+            const tempIsSundayArray = isSundayArray
             for (let i = 0; i < result.length; ++i){
                 const imageBlob = b64toBlob(result[i].comicStripBase64);
                 const imageObjectURL = URL.createObjectURL(imageBlob);
                 newData.push(imageObjectURL);
                 tempAllIDs.push(result[i].id);
+                tempIsSundayArray.push(result[i].sundayComic)
             }
             setData(newData)
             setAllIDs(tempAllIDs)
+            setIsSundayArray(tempIsSundayArray)
             setIsStillDownloading(false)
         })
     };
@@ -87,6 +93,7 @@ function ShowAll() {
                 <ImageViewer 
                     src={currentImageViewURL}
                     id={currentImageViewID}
+                    isSunday={isSunday}
                     close={() => {setCurrentImageViewURL(null)}} />
                 }
                 
@@ -105,7 +112,7 @@ function ShowAll() {
                             <ClickablePicture key={`${url}${Math.random()}`}
                                 src={url}
                                 onClick={() => {
-                                    openPicturePreview(url, allIDs[index]);
+                                    openPicturePreview(url, allIDs[index], isSundayArray[index]);
                                 }}
                                 text=""
                             />
