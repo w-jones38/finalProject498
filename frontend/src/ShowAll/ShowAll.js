@@ -121,7 +121,7 @@ function ShowAll() {
                                 onClick={() => {
                                     openPicturePreview(url, allIDs[index], isSundayArray[index], allPrintDates[index]);
                                 }}
-                                text=""
+                                text={allPrintDates[index]}
                             />
                         )
                     }) :
