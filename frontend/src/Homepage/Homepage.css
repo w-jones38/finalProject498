@@ -3,7 +3,7 @@
 }
 
 .Homepage-image {
-  max-width:90%;
+  max-width: min(100vh, 100vw);
   height:auto;
   pointer-events: none;
   border: 1px solid #ddd;
