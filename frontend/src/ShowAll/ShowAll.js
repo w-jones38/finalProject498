@@ -117,6 +117,7 @@ function ShowAll() {
                             // this image that will go in the caption
                             // a date maybe?
                             <ClickablePicture key={`${url}${Math.random()}`}
+                                shouldOpaque={currentImageViewURL != null}
                                 src={url}
                                 onClick={() => {
                                     openPicturePreview(url, allIDs[index], isSundayArray[index], allPrintDates[index]);
