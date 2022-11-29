@@ -55,7 +55,7 @@ function Homepage() {
                 <LoadingSpinner />
                 :
                 <div>
-                    <div>{printDate}</div>
+                    <div>Print Date: {printDate}</div>
                     <img src={mainImage} alt="whoops, this isn't right" className="Homepage-image"></img>
                     <div>
                         <BetterButton text={isFavorite ? "Unfavorite" : "Favorite"}

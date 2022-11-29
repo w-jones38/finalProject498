@@ -18,12 +18,15 @@ function ShowAll() {
     const [isSunday, setIsSunday] = useState(null)
     const [isSundayArray, setIsSundayArray] = useState([])
     const [allIDs, setAllIDs] = useState([])
+    const [allPrintDates, setAllPrintDates] = useState([])
+    const [currentImagePrintDate, setCurrentImagePrintDate] = useState(null)
 
-    const openPicturePreview = (url, id, isSunday) => {
+    const openPicturePreview = (url, id, isSunday, printDate) => {
         if(!currentImageViewURL){
             setCurrentImageViewURL(url)
             setCurrentImageViewID(id)
             setIsSunday(isSunday)
+            setCurrentImagePrintDate(printDate)
         }
     };
 
@@ -40,16 +43,19 @@ function ShowAll() {
             const newData = data;
             const tempAllIDs = allIDs
             const tempIsSundayArray = isSundayArray
+            const tempPrintDates = allPrintDates;
             for (let i = 0; i < result.length; ++i){
                 const imageBlob = b64toBlob(result[i].comicStripBase64);
                 const imageObjectURL = URL.createObjectURL(imageBlob);
                 newData.push(imageObjectURL);
                 tempAllIDs.push(result[i].id);
                 tempIsSundayArray.push(result[i].sundayComic)
+                tempPrintDates.push(result[i].dateOfPrint)
             }
             setData(newData)
             setAllIDs(tempAllIDs)
             setIsSundayArray(tempIsSundayArray)
+            setAllPrintDates(tempPrintDates)
             setIsStillDownloading(false)
         })
     };
@@ -94,6 +100,7 @@ function ShowAll() {
                     src={currentImageViewURL}
                     id={currentImageViewID}
                     isSunday={isSunday}
+                    date={currentImagePrintDate}
                     close={() => {setCurrentImageViewURL(null)}} />
                 }
                 
@@ -112,7 +119,7 @@ function ShowAll() {
                             <ClickablePicture key={`${url}${Math.random()}`}
                                 src={url}
                                 onClick={() => {
-                                    openPicturePreview(url, allIDs[index], isSundayArray[index]);
+                                    openPicturePreview(url, allIDs[index], isSundayArray[index], allPrintDates[index]);
                                 }}
                                 text=""
                             />
