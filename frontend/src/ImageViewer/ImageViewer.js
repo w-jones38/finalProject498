@@ -59,6 +59,7 @@ function ImageViewer(props) {
 
     return (
         <div className={isSunday?"ImageViewer-Sunday":"ImageViewer"}>
+            <div className="PreviewText">{props.date}</div>
             {/* IF props.id IS defined, then we are viewing from showAll page (use props.src) */}
             <img src={props.id?props.src:mainImage} className="Image"/>
             <div>

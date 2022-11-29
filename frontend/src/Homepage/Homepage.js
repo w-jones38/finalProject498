@@ -9,6 +9,7 @@ function Homepage() {
     const [mainImage, setMainImage] = useState(null);
     const [mainImageID, setMainImageID] = useState(-1);
     const [isFavorite, setIsFavorite] = useState(false);
+    const [printDate, setPrintDate] = useState(null);
 
     const fetchImage = async (imageUrl) => {
         let res;
@@ -34,9 +35,10 @@ function Homepage() {
             else { // the item doesnt exist yet, so lets add it
                 localStorage.setItem(result.id, result.id)
             }
-            
+            console.log(result)
             setMainImage(imageObjectURL);
             setMainImageID(result.id);
+            setPrintDate(result.dateOfPrint)
         })
     };
 
@@ -53,6 +55,7 @@ function Homepage() {
                 <LoadingSpinner />
                 :
                 <div>
+                    <div>Print Date: {printDate}</div>
                     <img src={mainImage} alt="whoops, this isn't right" className="Homepage-image"></img>
                     <div>
                         <BetterButton text={isFavorite ? "Unfavorite" : "Favorite"}
