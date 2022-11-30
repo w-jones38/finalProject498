@@ -24,10 +24,10 @@ function Toolbar(props) {
             <BetterButton disabled={props.pageSelected === "Homepage"}
                 onClick={navToHomepage} text="HOME"/>
             {/* <img className="Toolbar-image" src="header.png" /> */}
-            <BetterButton disabled={props.pageSelected === "Profile"}
-                onClick={navToProfile} text="PROFILE" />
             <BetterButton disabled={props.pageSelected === "Calendar"}
                 onClick={navToCalendar} text="CALENDAR" />
+            <BetterButton disabled={props.pageSelected === "Profile"}
+                onClick={navToProfile} text="PROFILE" />
         </header>
     );
 }
