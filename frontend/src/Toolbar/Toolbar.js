@@ -19,29 +19,11 @@ function Toolbar(props) {
         navigate('/calendar');
     };
 
-    // TODO REMOVE TESTING
-    const addToStore = () => {
-        let rand = (Math.floor(Math.random() * 400)+1).toString();
-        localStorage.setItem(rand,rand);
-        console.log(allStorage())
-    }
-    // END TESTING
-
     return (
         <header className='Toolbar'>
             <BetterButton disabled={props.pageSelected === "Homepage"}
                 onClick={navToHomepage} text="HOME"/>
-            <img className="Toolbar-image" src="header.png" />
-            {/*TODO REMOVE TESTING*/}
-            <button onClick={() => {
-                console.log(allStorage());
-            }}>SHOW LOCAL STORAGE</button>
-            <button onClick={() => {
-                localStorage.clear();
-                console.log(allStorage())
-            }}>CLEAR LOCAL STORAGE</button>
-            <button onClick={addToStore}>ADD RANDOM TO LOCAL STORAGE</button>
-            {/*END TESTING*/}
+            {/* <img className="Toolbar-image" src="header.png" /> */}
             <BetterButton disabled={props.pageSelected === "Profile"}
                 onClick={navToProfile} text="PROFILE" />
             <BetterButton disabled={props.pageSelected === "Calendar"}
