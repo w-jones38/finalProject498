@@ -29,9 +29,20 @@ function Toolbar(props) {
 
     return (
         <header className='Toolbar'>
-            <BetterButton disabled={props.pageSelected === "Homepage"}
-                onClick={navToHomepage} text="HOME"/>
-            <img className="Toolbar-image" src="header.png" />
+            <table>
+                <tr>
+                    <td>
+                        <BetterButton disabled={props.pageSelected === "Homepage"}
+                            onClick={navToHomepage} text="HOME"/>
+                    </td>
+                    <td>
+                        <div class="Toolbar-image-style">
+                            <img className="Toolbar-image" src="header.png" />
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            
             {/*TODO REMOVE TESTING*/}
             <button onClick={() => {
                 console.log(allStorage());
